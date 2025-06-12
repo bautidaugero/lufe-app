@@ -10,7 +10,6 @@ LUFE es una aplicación web desarrollada en Django que permite consultar y gesti
 - Ver autoridades de las entidades
 - Gestionar documentos
 - Consultar deudas
-- Ver períodos disponibles
 
 Requisitos
 ----------
