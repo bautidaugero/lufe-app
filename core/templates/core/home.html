@@ -1,0 +1,43 @@
+{% extends 'core/base.html' %}
+
+{% block title %}LUFE - Página Principal{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">Bienvenido al Sistema LUFE</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Búsquedas</h5>
+                <div class="list-group">
+                    <a href="{% url 'buscar_entidad' %}" class="list-group-item list-group-item-action">Búsqueda de entidad</a>
+                    <a href="{% url 'buscar_indicadores' %}" class="list-group-item list-group-item-action">Búsqueda de indicadores</a>
+                    <a href="{% url 'buscar_autoridades' %}" class="list-group-item list-group-item-action">Búsqueda de autoridades</a>
+                    <a href="{% url 'buscar_documentos' %}" class="list-group-item list-group-item-action">Búsqueda de documentos</a>
+                    <a href="{% url 'buscar_deudas' %}" class="list-group-item list-group-item-action">Buscar Deudas</a>
+                    <a href="{% url 'buscar_periodos' %}" class="list-group-item list-group-item-action">Buscar Períodos</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 mb-4">
+        <div class="card h-100">
+            <div class="card-body">
+                <h5 class="card-title">Descargas</h5>
+                <div class="list-group">
+                    <a href="{% url 'descargar_entidades_zip' %}" class="list-group-item list-group-item-action">Descargar entidades ZIP</a>
+                    <a href="{% url 'descargar_indicadores_zip' %}" class="list-group-item list-group-item-action">Descargar indicadores ZIP</a>
+                    <a href="{% url 'descargar_autoridades_zip' %}" class="list-group-item list-group-item-action">Descargar autoridades ZIP</a>
+                    <a href="{% url 'descargar_empleo_zip' %}" class="list-group-item list-group-item-action">Descargar empleo ZIP</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

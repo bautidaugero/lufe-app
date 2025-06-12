@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}LUFE - Sistema de Integración{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --background-color: #f8f9fa;
+            --text-color: #2c3e50;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        .navbar {
+            background-color: var(--primary-color);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+            color: white !important;
+            font-weight: bold;
+        }
+
+        .nav-link {
+            color: rgba(255,255,255,0.8) !important;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: white !important;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .card {
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+            border-color: #2980b9;
+        }
+
+        .form-control {
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            padding: 0.75rem;
+        }
+
+        .form-control:focus {
+            border-color: var(--secondary-color);
+            box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+        }
+
+        .alert {
+            border-radius: 5px;
+            border: none;
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        /* Estilos para la visualización del JSON */
+        .json-viewer {
+            background-color: white;
+            border-radius: 5px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .json-viewer table {
+            width: 100%;
+            margin-bottom: 0;
+            border-collapse: collapse;
+        }
+
+        .json-viewer th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: #2c3e50;
+            border: 1px solid #dee2e6;
+            padding: 0.75rem;
+            width: 30%;
+            text-align: left;
+        }
+
+        .json-viewer td {
+            border: 1px solid #dee2e6;
+            padding: 0.75rem;
+            vertical-align: middle;
+        }
+
+        .json-viewer tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        .json-viewer tr:hover {
+            background-color: #e9ecef;
+        }
+
+        .json-viewer .nested-json {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            border-radius: 4px;
+            padding: 0.5rem;
+            margin: 0;
+            font-family: monospace;
+            white-space: pre-wrap;
+        }
+
+        .back-link {
+            color: var(--secondary-color);
+            text-decoration: none;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+
+        .back-link:hover {
+            color: #2980b9;
+            text-decoration: underline;
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="{% url 'home' %}">LUFE</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'buscar_entidad' %}">Buscar Entidad</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'buscar_indicadores' %}">Indicadores</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'buscar_autoridades' %}">Autoridades</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'buscar_documentos' %}">Documentos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'buscar_deudas' %}">Deudas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'buscar_periodos' %}">Períodos</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        {% block content %}{% endblock %}
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('pre.json-viewer').forEach(pre => {
+                try {
+                    const json = JSON.parse(pre.textContent);
+                    let html = '<table class="table table-bordered table-hover">';
+                    
+                    // Función para formatear valores anidados
+                    function formatValue(value) {
+                        if (value === null) {
+                            return '<em>null</em>';
+                        }
+                        if (typeof value === 'object') {
+                            return '<pre class="nested-json">' + JSON.stringify(value, null, 2) + '</pre>';
+                        }
+                        if (typeof value === 'boolean') {
+                            return `<span class="badge bg-${value ? 'success' : 'danger'}">${value}</span>`;
+                        }
+                        if (typeof value === 'number') {
+                            return value;
+                        }
+                        return value;
+                    }
+
+                    // Crear filas para cada propiedad
+                    for (const [key, value] of Object.entries(json)) {
+                        html += '<tr>';
+                        html += `<th>${key}</th>`;
+                        html += `<td>${formatValue(value)}</td>`;
+                        html += '</tr>';
+                    }
+                    
+                    html += '</table>';
+                    pre.innerHTML = html;
+                } catch (e) {
+                    console.error('Error parsing JSON:', e);
+                }
+            });
+        });
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html> 

@@ -1,0 +1,53 @@
+{% extends 'core/base.html' %}
+
+{% block title %}LUFE - Buscar Deudas{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">Buscar Deudas</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="cuit" class="form-label">CUIT</label>
+                        <input type="text" class="form-control" id="cuit" name="cuit" value="{{ cuit|default_if_none:'' }}" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if error %}
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if deudas %}
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Deudas encontradas:</h2>
+                <pre class="json-viewer mt-3">{{ deudas|safe|linebreaksbr }}</pre>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<a href="{% url 'home' %}">Volver a inicio</a>
+{% endblock %}

@@ -1,0 +1,1 @@
+# Este archivo puede estar vacío en versiones recientes de Django

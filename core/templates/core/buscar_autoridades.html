@@ -1,0 +1,51 @@
+{% extends 'core/base.html' %}
+
+{% block title %}LUFE - Buscar Autoridades{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-12">
+        <h1 class="mb-4">Buscar Autoridades por CUIT</h1>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label for="cuit" class="form-label">CUIT</label>
+                        <input type="text" class="form-control" id="cuit" name="cuit" placeholder="Ingrese CUIT" required>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Buscar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% if error %}
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="alert alert-danger" role="alert">
+            {{ error }}
+        </div>
+    </div>
+</div>
+{% endif %}
+
+{% if autoridades %}
+<div class="row mt-4">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">Resultado:</h2>
+                <pre class="json-viewer mt-3">{{ autoridades|safe }}</pre>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}
