@@ -11,6 +11,7 @@ def llamar_api(endpoint: str, params: dict = None) -> dict | None:
     try:
         response = requests.get(f"{API_BASE_URL}/{endpoint}", headers=headers, params=params)
         response.raise_for_status()  # Lanza un error si la respuesta no es exitosa
+        print(response.json())
         return response.json()
     except requests.RequestException as e:
         print(f"Error al llamar a la API: {e}")

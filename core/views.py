@@ -9,6 +9,8 @@ import json
 
 load_dotenv()
 
+API_KEY = os.getenv("APIKEY")
+
 def home(request):
     return render(request, "core/home.html")
 
@@ -82,15 +84,14 @@ def buscar_documentos(request):
 
 def descargar_documento(request, cuit, archivo_id):
     api_url = f"https://legajounicoapi.produccion.gob.ar/lufe/entidades/{cuit}/archivos/{archivo_id}"
-    api_key = os.environ.get("API_KEY")  # Obtiene la API key del .env
-    headers = {
-        "apikey": api_key
-    }
+    api_key = os.getenv("API_KEY")
+    headers = {"apikey": API_KEY}
     response = requests.get(api_url, headers=headers)
+    print(headers)
     if response.status_code == 200:
         filename = response.headers.get('Content-Disposition', 'documento.pdf')
         resp = HttpResponse(response.content, content_type=response.headers.get('Content-Type', 'application/pdf'))
-        resp['Content-Disposition'] = f'attachment; filename="{archivo_id}.pdf"'
+        resp['Content-Disposition'] = f'attachment; filename="{cuit}.pdf"'
         return resp
     else:
         return HttpResponse("No se pudo descargar el archivo.", status=400)
