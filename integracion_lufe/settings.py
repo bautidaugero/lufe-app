@@ -25,7 +25,7 @@ SECRET_KEY = 'django-insecure-1tpx7)-###t3johfxx)(03r!08kmw$+vvwrbhz!(otz04@xb0s
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['10.155.5.34', 'localhost', '127.0.0.1', 'lufe', 'lufe-app']
 
 
 # Application definition
@@ -116,6 +116,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Configuración para archivos estáticos
+STATIC_ROOT = '/var/www/lufe-app/staticfiles'
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
