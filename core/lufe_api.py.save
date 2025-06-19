@@ -1,7 +1,7 @@
 import os
 import requests
 from dotenv import load_dotenv, find_dotenv
-from django.http import FileResponse, HttpResponse
+from django.http import FileResponse, HttpResponse, StreamingHttpResponse
 
 load_dotenv(find_dotenv(filename="apikey.env"))
 
