@@ -1,5 +1,6 @@
 from django.urls import path
 from . import views
+from .views import descargar_entidades_zip
 
 urlpatterns = [
     path('', views.home, name='home'),  # Página principal
@@ -10,7 +11,7 @@ urlpatterns = [
     path('descargar-documento/<str:cuit>/<str:archivo_id>/', views.descargar_documento, name='descargar_documento'),
     path('buscar-deudas/', views.buscar_deudas, name='buscar_deudas'),
     path('buscar-periodos/', views.buscar_periodos, name='buscar_periodos'),
-    path('descargar-entidades-zip/', views.descargar_entidades_zip, name='descargar_entidades_zip'),
+    path("descargar/entidades/", descargar_entidades_zip, name="descargar_entidades"),
     path('descargar-indicadores-zip/', views.descargar_indicadores_zip, name='descargar_indicadores_zip'),
     path('descargar-autoridades-zip/', views.descargar_autoridades_zip, name='descargar_autoridades_zip'),
     path('descargar-empleo-zip/', views.descargar_empleo_zip, name='descargar_empleo_zip'),

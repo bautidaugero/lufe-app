@@ -4,7 +4,7 @@ from django.shortcuts import render
 import requests
 from django.http import FileResponse, HttpResponse
 from .lufe_api import get_entidad, get_indicadores, get_indicadores_por_periodo, get_indicadores_post_balance, get_autoridades, get_documentos, get_documentos_por_periodo, get_deudas, get_periodos
-from .lufe_api import get_entidades_zip, get_indicadores_zip, get_autoridades_zip, get_empleo_zip
+from .lufe_api import get_indicadores_zip, get_autoridades_zip, get_empleo_zip
 import json
 
 load_dotenv()
