@@ -1,7 +1,7 @@
 import os
 import requests
 from dotenv import load_dotenv, find_dotenv
-from django.http import FileResponse, HttpResponse
+from django.http import FileResponse, HttpResponse, StreamingHttpResponse
 
 load_dotenv(find_dotenv(filename="apikey.env"))
 
@@ -83,7 +83,7 @@ def descargar_entidades_zip(request):
     headers = {"Authorization": f"Bearer {API_KEY}"}
 
     try:
-        r = requests.get(url, headers=headers, stream=True)
+        r = requests.get(url, headers=headers, stream=True, timeout=200)
         r.raise_for_status()
     except requests.RequestException as e:
         return HttpResponse(f"No se pudo descargar el archivo: {e}", status=400)

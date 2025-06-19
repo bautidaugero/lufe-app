@@ -7,7 +7,7 @@ User=ubuntu
 Group=www-data
 WorkingDirectory=/var/www/lufe-app
 Environment="PATH=/var/www/lufe-app/venv/bin"
-ExecStart=/var/www/lufe-app/venv/bin/gunicorn --workers 3 --bind unix:/var/www/lufe-app/lufe.sock integracion_lufe.wsgi:application
+ExecStart=/var/www/lufe-app/venv/bin/gunicorn --workers 3 --timeout 200 --bind unix:/var/www/lufe-app/lufe.sock integracion_lufe.wsgi:application
 
 [Install]
 WantedBy=multi-user.target

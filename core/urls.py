@@ -1,6 +1,7 @@
 from django.urls import path
 from . import views
 from .views import descargar_entidades_zip
+from .lufe_api import descargar_entidades_zip
 
 urlpatterns = [
     path('', views.home, name='home'),  # Página principal
