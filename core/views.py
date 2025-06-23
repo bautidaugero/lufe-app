@@ -139,7 +139,7 @@ def descargar_entidades_zip(request):
     filename = "entidades.zip"
     os.makedirs(folder, exist_ok=True)
     full_path = os.path.join(folder, filename)
-    if get_entidades_zip():  # Asegúrate que get_entidades_zip guarde en full_path
+    if descargar_entidades_zip():  # Asegúrate que get_entidades_zip guarde en full_path
         if os.path.exists(full_path):
             return FileResponse(open(full_path, "rb"), as_attachment=True, filename=filename)
     return HttpResponse("No se pudo descargar el archivo.", status=400)
