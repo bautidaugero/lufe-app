@@ -114,6 +114,12 @@ Para reportar problemas o solicitar ayuda:
 - Crear un issue en el repositorio
 - Contactar al equipo de desarrollo
 
+Comando para ver los logs del gunicorn: 
+journalctl -u lufe -n 150 // el numero del final es para especificar la cantidad de lienas de log a ver
+
+Comando para reiniciar el servidor gunicorn:
+sudo systemctl restart lufe //
+
 Licencia
 -------
 [ESPECIFICAR LICENCIA] 

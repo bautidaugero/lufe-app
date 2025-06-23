@@ -11,19 +11,19 @@ API_KEY = os.getenv("APIKEY")
 
 # Función para llamar a la API y manejar errores devuelve un JSON
 def llamar_api(endpoint: str, params: dict = None) -> dict | None:
-    print(f"API_KEY disponible: {'Sí' if API_KEY else 'No'}")
-    print(f"API_KEY valor: {API_KEY}")
+    #print(f"API_KEY disponible: {'Sí' if API_KEY else 'No'}")
+    #print(f"API_KEY valor: {API_KEY}")
 
     headers = {"apikey": API_KEY}
-    print(f"Headers enviados: {headers}")
+    #print(f"Headers enviados: {headers}")
 
     url = f"{API_BASE_URL}/{endpoint}"
-    print(f"URL de la petición: {url}")
+    #print(f"URL de la petición: {url}")
 
     try:
         response = requests.get(url, headers=headers, params=params)
-        print(f"Código de respuesta: {response.status_code}")
-        print(f"Respuesta completa: {response.text}")
+        #print(f"Código de respuesta: {response.status_code}")
+        #print(f"Respuesta completa: {response.text}")
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:
@@ -40,7 +40,7 @@ def descargar_zip(endpoint: str, filename: str) -> bool:
         if response.status_code == 200:
             with open(filename, "wb") as f:
                 f.write(response.content)
-            print(f"Archivo {filename} guardado correctamente.")
+            #print(f"Archivo {filename} guardado correctamente.")
             return True
         else:
             print(f"Error {response.status_code}: {response.text}")
