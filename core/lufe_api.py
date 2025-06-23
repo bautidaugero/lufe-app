@@ -34,7 +34,7 @@ def llamar_api(endpoint: str, params: dict = None) -> dict | None:
 
 
 def descargar_zip(endpoint: str, filename: str) -> bool:
-    headers = {"APIKEY": API_KEY}
+    headers = {"apikey": API_KEY}
     try:
         response = requests.get(f"{API_BASE_URL}{endpoint}", headers=headers)
         if response.status_code == 200:
@@ -81,15 +81,6 @@ def get_periodos(cuit: str) -> dict | None:
 def get_entidades_zip(path="entidades.zip") -> bool:
     return descargar_zip("/downloadentidadesall", path)
 
-def descargar_entidades_zip(request):
-    folder = "entidades"
-    filename = "entidades.zip"
-    os.makedirs(folder, exist_ok=True)
-    full_path = os.path.join(folder, filename)
-    if get_entidades_zip(full_path):
-        if os.path.exists(full_path):
-            return FileResponse(open(full_path, "rb"), as_attachment=True, filename=filename)
-    return HttpResponse("No se pudo descargar el archivo.", status=400)
 
 def get_indicadores_zip(path="indicadores.zip") -> bool:
     return descargar_zip("/downloadindicadoresall", path)
@@ -99,6 +90,16 @@ def get_autoridades_zip(path="autoridades.zip") -> bool:
 
 def get_empleo_zip(path="empleo.zip") -> bool:
     return descargar_zip("/downloadempleoall", path)
+
+def descargar_entidades_zip(request):
+    folder = "entidades"
+    filename = "entidades.zip"
+    os.makedirs(folder, exist_ok=True)
+    full_path = os.path.join(folder, filename)
+    if get_entidades_zip(full_path):
+        if os.path.exists(full_path):
+            return FileResponse(open(full_path, "rb"), as_attachment=True, filename=filename)
+    return HttpResponse("No se pudo descargar el archivo.", status=400)
 
 def descargar_indicadores_zip(request):
     folder = "indicadores"
