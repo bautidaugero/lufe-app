@@ -40,7 +40,7 @@ def buscar_indicadores(request):
             error = "Debe ingresar un CUIT."
     return render(request, "core/buscar_indicadores.html", {"indicadores": json.dumps(indicadores) if indicadores else None, "error": error})
 
-from .lufe_api import get_autoridades
+
 
 def buscar_autoridades(request):
     autoridades = None
@@ -59,32 +59,30 @@ def buscar_documentos(request):
     documentos = None
     error = None
     cuit = ""
-    periodo = ""
+    documentos_por_periodo = {}
     if request.method == "POST":
         cuit = (request.POST.get("cuit") or "").strip()
-        periodo = (request.POST.get("periodo") or "").strip()
         if cuit:
-            if periodo:
-                documentos = get_documentos_por_periodo(cuit, periodo)
-            else:
-                documentos = get_documentos(cuit)
-            # Extrae el archivo_id correctamente
-            if documentos and "documentos" in documentos:
-                for doc in documentos["documentos"]:
-                    doc["archivo_id"] = doc["url"].split("/")[-1]
-            if not documentos:
+            periodos = get_periodos(cuit)
+            if periodos:
+                for per in periodos:
+                    docs = get_documentos_por_periodo(cuit, per)
+                    if docs and "documentos" in docs and docs["documentos"]:
+                        for doc in docs["documentos"]:
+                            doc["archivo_id"] = doc["url"].split("/")[-1]
+                        documentos_por_periodo[per] = docs["documentos"]
+            if not documentos_por_periodo:
                 error = "No se encontraron documentos o hubo un error en la consulta."
         else:
             error = "Debe ingresar un CUIT."
     return render(
         request,
         "core/buscar_documentos.html",
-        {"documentos": documentos, "error": error, "cuit": cuit, "periodo": periodo}
+        {"documentos": documentos, "documentos_por_periodo": documentos_por_periodo, "error": error, "cuit": cuit}
     )
 
 def descargar_documento(request, cuit, archivo_id):
     api_url = f"https://legajounicoapi.produccion.gob.ar/lufe/entidades/{cuit}/archivos/{archivo_id}"
-    api_key = os.getenv("API_KEY")
     headers = {"apikey": API_KEY}
     response = requests.get(api_url, headers=headers)
     print(headers)
@@ -120,10 +118,10 @@ def buscar_periodos(request):
     cuit = ""
     if request.method == "POST":
         cuit = (request.POST.get("cuit") or "").strip()
-        print("CUIT recibido:", cuit)  # <-- Agrega este print
+        #print("CUIT recibido:", cuit)  # <-- Agrega este print
         if cuit:
             periodos = get_periodos(cuit)
-            print("Respuesta de get_periodos:", periodos)  # <-- Y este print
+            #print("Respuesta de get_periodos:", periodos)  # <-- Y este print
             if not periodos:
                 error = "No se encontraron períodos o hubo un error en la consulta."
         else:

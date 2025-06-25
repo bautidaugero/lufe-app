@@ -81,7 +81,6 @@ def get_periodos(cuit: str) -> dict | None:
 def get_entidades_zip(path="entidades.zip") -> bool:
     return descargar_zip("/downloadentidadesall", path)
 
-
 def get_indicadores_zip(path="indicadores.zip") -> bool:
     return descargar_zip("/downloadindicadoresall", path)
 
@@ -126,10 +125,10 @@ def descargar_empleo_zip(request):
     filename = "empleo.zip"
     os.makedirs(folder, exist_ok=True)
     full_path = os.path.join(folder, filename)
-    print("Llamando a get_empleo_zip()")
+    #print("Llamando a get_empleo_zip()")
     resultado = get_empleo_zip(full_path)
-    print("Resultado de get_empleo_zip():", resultado)
-    print("Existe el archivo?", os.path.exists(full_path))
+    #print("Resultado de get_empleo_zip():", resultado)
+    #print("Existe el archivo?", os.path.exists(full_path))
     if resultado and os.path.exists(full_path):
         return FileResponse(open(full_path, "rb"), as_attachment=True, filename=filename)
     return HttpResponse("No se pudo descargar el archivo.", status=400)
